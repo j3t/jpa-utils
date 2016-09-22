@@ -68,7 +68,8 @@
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<argLine>-javaagent:"${settings.localRepository}/org/springframework/spring-instrument/${spring.version}/spring-instrument-${spring.version}.jar" ${jacoco.argLine}</argLine>
+					<argLine>-javaagent:"${settings.localRepository}/org/springframework/spring-instrument/${spring.version}/spring-instrument-${spring.version}.jar"
+						${jacoco.argLine}</argLine>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -161,7 +162,7 @@
 											</classfiles>
 											<sourcefiles encoding="UTF-8">
 												<fileset dir="jpa-utils-core/src/main/java" />
-			                                </sourcefiles>
+											</sourcefiles>
 										</group>
 										<group name="jpa-utils-eclipselink">
 											<classfiles>
@@ -169,7 +170,7 @@
 											</classfiles>
 											<sourcefiles encoding="UTF-8">
 												<fileset dir="jpa-utils-eclipselink/src/main/java" />
-			                                </sourcefiles>
+											</sourcefiles>
 										</group>
 										<group name="jpa-utils-hibernate">
 											<classfiles>
@@ -177,7 +178,7 @@
 											</classfiles>
 											<sourcefiles encoding="UTF-8">
 												<fileset dir="jpa-utils-hibernate/src/main/java" />
-			                                </sourcefiles>
+											</sourcefiles>
 										</group>
 										<group name="jpa-utils-openjpa">
 											<classfiles>
@@ -185,10 +186,10 @@
 											</classfiles>
 											<sourcefiles encoding="UTF-8">
 												<fileset dir="jpa-utils-openjpa/src/main/java" />
-			                                </sourcefiles>
+											</sourcefiles>
 										</group>
 									</structure>
-									
+
 									<html destdir="${basedir}/target/site/jacoco" />
 									<xml destfile="${basedir}/target/site/jacoco/jacoco.xml" />
 									<csv destfile="${basedir}/target/site/jacoco/jacoco.csv" />
@@ -204,6 +205,12 @@
 						<version>${jacoco.version}</version>
 					</dependency>
 				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.eluder.coveralls</groupId>
+				<artifactId>coveralls-maven-plugin</artifactId>
+				<version>3.1.0</version>
+				<inherited>false</inherited>
 			</plugin>
 		</plugins>
 		<pluginManagement>
