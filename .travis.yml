@@ -11,7 +11,7 @@ matrix:
 
 install: true
 
-script: mvn verify
+script: mvn clean verify
 
 after_success:
   - mvn coveralls:report -DrepoToken=$repo_token
