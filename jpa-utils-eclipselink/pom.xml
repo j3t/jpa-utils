@@ -11,19 +11,6 @@
 		<eclipselink.version>2.6.3</eclipselink.version>
 	</properties>
 	
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.eluder.coveralls</groupId>
-				<artifactId>coveralls-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
-
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
