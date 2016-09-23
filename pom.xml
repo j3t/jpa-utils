@@ -140,7 +140,7 @@
 									<classpath path="${basedir}/target/jacoco-jars/org.jacoco.ant.jar" />
 								</taskdef>
 								<mkdir dir="${basedir}/target/site/jacoco" />
-								<mkdir dir="${basedir}/jpa-utils-core/target" />
+								<mkdir dir="${basedir}/jpa-utils-core/target/classes" />
 								<mkdir dir="${basedir}/jpa-utils-eclipselink/target/classes" />
 								<mkdir dir="${basedir}/jpa-utils-hibernate/target/classes" />
 								<mkdir dir="${basedir}/jpa-utils-openjpa/target/classes" />
