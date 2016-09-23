@@ -11,9 +11,8 @@ matrix:
 
 install: true
 
-script: mvn clean verify
+script: mvn verify coveralls:report -DrepoToken=$repo_token
 
 after_success:
-  - mvn coveralls:report -DrepoToken=$repo_token
   - pip install --user codecov
   - codecov
