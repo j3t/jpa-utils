@@ -11,10 +11,6 @@ matrix:
 
 install: true
 
-before_script:
-  - "echo $JAVA_OPTS"
-  - "export JAVA_OPTS=-Xmx512m"
-
 script: mvn verify coveralls:report -DrepoToken=$repo_token
 
 after_success:
