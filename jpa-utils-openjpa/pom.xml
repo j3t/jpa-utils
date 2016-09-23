@@ -18,6 +18,18 @@
 				<configuration>
 					<argLine>-javaagent:"${settings.localRepository}/org/springframework/spring-instrument/${spring.version}/spring-instrument-${spring.version}.jar" -javaagent:"${settings.localRepository}/org/apache/openjpa/openjpa/${openjpa.version}/openjpa-${openjpa.version}.jar" ${jacoco.argLine}</argLine>
 				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-instrument</artifactId>
+						<version>${spring.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>org.apache.openjpa</groupId>
+						<artifactId>openjpa</artifactId>
+						<version>${openjpa.version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>

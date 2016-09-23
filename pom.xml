@@ -66,13 +66,6 @@
 	<build>
 		<plugins>
 			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<argLine>-javaagent:"${settings.localRepository}/org/springframework/spring-instrument/${spring.version}/spring-instrument-${spring.version}.jar"
-						${jacoco.argLine}</argLine>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>${jacoco.version}</version>
@@ -232,11 +225,15 @@
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>2.19.1</version>
 					<configuration>
-						<skipTests>${skipUTs}</skipTests>
-						<forkCount>3</forkCount>
-						<reuseForks>true</reuseForks>
-						<argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+						<argLine>-javaagent:"${settings.localRepository}/org/springframework/spring-instrument/${spring.version}/spring-instrument-${spring.version}.jar" ${jacoco.argLine}</argLine>
 					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-instrument</artifactId>
+							<version>${spring.version}</version>
+						</dependency>
+					</dependencies>
 				</plugin>
 			</plugins>
 		</pluginManagement>
