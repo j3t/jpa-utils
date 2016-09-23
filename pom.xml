@@ -139,11 +139,11 @@
 								<taskdef name="report" classname="org.jacoco.ant.ReportTask">
 									<classpath path="${basedir}/target/jacoco-jars/org.jacoco.ant.jar" />
 								</taskdef>
-								<mkdir dir="${project.build.directory}/site/jacoco" />
-								<mkdir dir="${project.build.directory}/jpa-utils-core/target" />
-								<mkdir dir="${project.build.directory}/jpa-utils-eclipselink/target" />
-								<mkdir dir="${project.build.directory}/jpa-utils-hibernate/target" />
-								<mkdir dir="${project.build.directory}/jpa-utils-openjpa/target" />
+								<mkdir dir="${basedir}/target/site/jacoco" />
+								<mkdir dir="${basedir}/jpa-utils-core/target" />
+								<mkdir dir="${basedir}/jpa-utils-eclipselink/target" />
+								<mkdir dir="${basedir}/jpa-utils-hibernate/target" />
+								<mkdir dir="${basedir}/jpa-utils-openjpa/target" />
 								<report>
 									<executiondata>
 										<fileset dir="jpa-utils-core/target">
