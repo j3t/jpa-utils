@@ -141,9 +141,9 @@
 								</taskdef>
 								<mkdir dir="${basedir}/target/site/jacoco" />
 								<mkdir dir="${basedir}/jpa-utils-core/target" />
-								<mkdir dir="${basedir}/jpa-utils-eclipselink/target" />
-								<mkdir dir="${basedir}/jpa-utils-hibernate/target" />
-								<mkdir dir="${basedir}/jpa-utils-openjpa/target" />
+								<mkdir dir="${basedir}/jpa-utils-eclipselink/target/classes" />
+								<mkdir dir="${basedir}/jpa-utils-hibernate/target/classes" />
+								<mkdir dir="${basedir}/jpa-utils-openjpa/target/classes" />
 								<report>
 									<executiondata>
 										<fileset dir="jpa-utils-core/target">
