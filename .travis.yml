@@ -1,18 +1,23 @@
 language: java
 
-matrix:
-  include:
-    - os: linux
-      jdk: oraclejdk7
-    - os: linux
-      jdk: oraclejdk8
-    - os: osx
-      osx_image: xcode7.3
+os: linux
+jdk:
+  - oraclejdk7
+  - oraclejdk8
+env:
+  - spring.profiles.active=h2
+  - spring.profiles.active=hsql
+  - spring.profiles.active=derby
+  - spring.profiles.active=postgresql
 
 install: true
 
-script: mvn verify coveralls:report -DrepoToken=$repo_token
+services:
+  - postgresql
 
-after_success:
-  - pip install --user codecov
-  - codecov
+before_script:
+  - psql -c 'drop database if exists jpa_utils;' -U postgres
+  - psql -c 'create database jpa_utils;' -U postgres
+
+script: mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest
+

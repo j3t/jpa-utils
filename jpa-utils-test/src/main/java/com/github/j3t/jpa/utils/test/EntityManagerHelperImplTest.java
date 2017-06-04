@@ -12,12 +12,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 
 import com.github.j3t.jpa.utils.core.EntityManagerHelper;
 import com.github.j3t.jpa.utils.test.domain.Address;
 import com.github.j3t.jpa.utils.test.domain.User;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * This class contains all basic tests against the test domain. The test method names follows the
@@ -26,6 +29,8 @@ import com.github.j3t.jpa.utils.test.domain.User;
  * @author j3t
  *
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {ScanClasspathConfig.class})
 public class EntityManagerHelperImplTest extends AbstractTransactionalJUnit4SpringContextTests
 {
     @PersistenceContext

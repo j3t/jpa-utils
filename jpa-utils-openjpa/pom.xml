@@ -16,6 +16,9 @@
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
+					<dependenciesToScan>
+						<dependency>${project.groupId}:jpa-utils-test</dependency>
+					</dependenciesToScan>
 					<argLine>-javaagent:"${settings.localRepository}/org/springframework/spring-instrument/${spring.version}/spring-instrument-${spring.version}.jar" -javaagent:"${settings.localRepository}/org/apache/openjpa/openjpa/${openjpa.version}/openjpa-${openjpa.version}.jar" ${jacoco.argLine}</argLine>
 				</configuration>
 				<dependencies>

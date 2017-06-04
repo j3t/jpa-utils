@@ -33,4 +33,17 @@
 		</dependency>
 	</dependencies>
 
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<dependenciesToScan>
+						<dependency>${project.groupId}:jpa-utils-test</dependency>
+					</dependenciesToScan>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>
