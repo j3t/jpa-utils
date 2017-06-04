@@ -29,7 +29,7 @@ public class PostgreSQLConfig
     {
         DriverManagerDataSource driver = new DriverManagerDataSource();
         driver.setDriverClassName("org.postgresql.Driver");
-        driver.setUrl("jdbc:postgresql://j3t-htpc:5432/jpa_utils");
+        driver.setUrl("jdbc:postgresql://localhost:5432/jpa_utils");
         driver.setUsername("postgres");
         driver.setPassword("s3cr3t");
 

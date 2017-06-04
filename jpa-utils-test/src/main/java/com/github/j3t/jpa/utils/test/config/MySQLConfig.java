@@ -27,7 +27,7 @@ public class MySQLConfig
     {
         DriverManagerDataSource driver = new DriverManagerDataSource();
         driver.setDriverClassName("com.mysql.jdbc.Driver");
-        driver.setUrl("jdbc:mysql://j3t-htpc:3306/jpa_utils");
+        driver.setUrl("jdbc:mysql://localhost:3306/jpa_utils");
         driver.setUsername("mysql");
         driver.setPassword("s3cr3t");
 

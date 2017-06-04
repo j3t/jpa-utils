@@ -1,18 +1,13 @@
 language: java
 
 os: linux
-jdk:
-  - oraclejdk7
-  - oraclejdk8
-
+jdk: oraclejdk8
 install: true
 
 services:
   - postgresql
 
 before_script:
-  - psql -c 'drop database if exists jpa_utils;' -U postgres
-  - psql -c 'create database jpa_utils;' -U postgres
   - mvn install -DskipTests
 
 script:
@@ -25,7 +20,11 @@ script:
   - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=derby -pl :jpa-utils-hibernate
   - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=derby -pl :jpa-utils-eclipselink
   - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=derby -pl :jpa-utils-openjpa
+  - psql -c 'create database jpa_utils;' -U postgres
   - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=postgresql -pl :jpa-utils-hibernate
+  - psql -c 'drop database jpa_utils;' -U postgres
+  - psql -c 'create database jpa_utils;' -U postgres
   - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=postgresql -pl :jpa-utils-eclipselink
+  - psql -c 'drop database if exists jpa_utils;' -U postgres
+  - psql -c 'create database jpa_utils;' -U postgres
   - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=postgresql -pl :jpa-utils-openjpa
-
