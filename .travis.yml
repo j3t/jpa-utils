@@ -19,5 +19,8 @@ before_script:
   - psql -c 'drop database if exists jpa_utils;' -U postgres
   - psql -c 'create database jpa_utils;' -U postgres
 
-script: mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest
+script:
+  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -pl :jpa-utils-hibernate
+  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -pl :jpa-utils-eclipselink
+  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -pl :jpa-utils-openjpa
 
