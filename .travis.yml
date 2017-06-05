@@ -5,12 +5,12 @@ install: true
 sudo: required
 
 env:
-  - spring'.'profiles'.'active=h2
-  - spring'.'profiles'.'active=hsql
-  - spring'.'profiles'.'active=derby
-  - spring'.'profiles'.'active=postgresql
-  - spring'.'profiles'.'active=mysql
-  - spring'.'profiles'.'active=oracle
+  - SPRING_PROFILES_ACTIVE=h2
+  - SPRING_PROFILES_ACTIVE=hsql
+  - SPRING_PROFILES_ACTIVE=derby
+  - SPRING_PROFILES_ACTIVE=postgresql
+  - SPRING_PROFILES_ACTIVE=mysql
+  - SPRING_PROFILES_ACTIVE=oracle
 
 services:
   - docker
