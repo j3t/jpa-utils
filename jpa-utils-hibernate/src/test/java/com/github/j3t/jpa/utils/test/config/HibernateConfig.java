@@ -18,7 +18,7 @@ import com.github.j3t.jpa.utils.test.domain.User;
 public class HibernateConfig
 {
     @Bean
-    LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, Database database) throws Exception
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, Database database) throws Exception
     {
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
         jpaVendorAdapter.setGenerateDdl(false);
@@ -35,7 +35,7 @@ public class HibernateConfig
     }
 
     @Bean
-    EntityManagerHelper entityManagerHelper()
+    public EntityManagerHelper entityManagerHelper()
     {
         return new HibernateEntityManagerHelper();
     }

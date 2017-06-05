@@ -10,7 +10,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
-public class JpaConfig
+public class TXConfig
 {
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) throws Exception
