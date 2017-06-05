@@ -22,4 +22,3 @@ script:
   - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -pl :jpa-utils-hibernate
   - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -pl :jpa-utils-eclipselink
   - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -pl :jpa-utils-openjpa
-
