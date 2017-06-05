@@ -1,15 +1,16 @@
 language: java
-
 os: linux
-jdk: oraclejdk8
+jdk: oraclejdk7
 install: true
-
 sudo: required
 
-before_install:
-  - docker pull postgres:9.6
-  - docker pull mysql:5.7
-  - docker pull wnameless/oracle-xe-11g:16.04
+env:
+  - spring.profiles.active=h2
+  - spring.profiles.active=hqsl
+  - spring.profiles.active=derby
+  - spring.profiles.active=postgresql
+  - spring.profiles.active=mysql
+  - spring.profiles.active=oracle
 
 services:
   - docker
@@ -18,21 +19,6 @@ before_script:
   - mvn install -DskipTests
 
 script:
-  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=h2 -pl :jpa-utils-hibernate
-  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=h2 -pl :jpa-utils-eclipselink
-  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=h2 -pl :jpa-utils-openjpa
-  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=hsql -pl :jpa-utils-hibernate
-  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=hsql -pl :jpa-utils-eclipselink
-  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=hsql -pl :jpa-utils-openjpa
-  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=derby -pl :jpa-utils-hibernate
-  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=derby -pl :jpa-utils-eclipselink
-  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=derby -pl :jpa-utils-openjpa
-  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=postgresql -pl :jpa-utils-hibernate
-  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=postgresql -pl :jpa-utils-eclipselink
-  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=postgresql -pl :jpa-utils-openjpa
-  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=mysql -pl :jpa-utils-hibernate
-  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=mysql -pl :jpa-utils-eclipselink
-  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=mysql -pl :jpa-utils-openjpa
-  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=oracle -pl :jpa-utils-hibernate
-  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=oracle -pl :jpa-utils-eclipselink
-  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -Dspring.profiles.active=oracle -pl :jpa-utils-openjpa
+  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -pl :jpa-utils-hibernate
+  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -pl :jpa-utils-eclipselink
+  - mvn verify coveralls:report -DrepoToken=$repo_token -Dtest=com.github.j3t.jpa.utils.test.EntityManagerHelperImplTest -pl :jpa-utils-openjpa
