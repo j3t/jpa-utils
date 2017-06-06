@@ -7,20 +7,20 @@ import com.github.dockerjava.api.command.CreateContainerResponse;
 import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.Ports;
 import com.github.dockerjava.core.command.PullImageResultCallback;
+import com.github.j3t.jpa.utils.core.DataSourceHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
-import org.springframework.jdbc.datasource.init.UncategorizedScriptException;
 import org.springframework.orm.jpa.vendor.Database;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.sql.DataSource;
-import java.util.Properties;
 
 @Configuration
 @Import(DockerConfig.class)
@@ -63,28 +63,20 @@ public class PostgreSQLConfig {
                 .getHostPortSpec();
 
         // create DataSource to connect to the PostgreSQL container
-        DriverManagerDataSource driver = new DriverManagerDataSource();
-        driver.setDriverClassName("org.postgresql.Driver");
-        driver.setUrl("jdbc:postgresql://localhost:" + exposedPort + "/test");
-        driver.setUsername("postgres");
-        driver.setPassword("postgres");
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("org.postgresql.Driver");
+        dataSource.setUrl("jdbc:postgresql://localhost:" + exposedPort + "/test");
+        dataSource.setUsername("postgres");
+        dataSource.setPassword("postgres");
+
+        DataSourceHelper.waitUntilDatabaseIsAvailable(dataSource, 600);
 
         // create DatabasePopulator to initialize the PostgreSQL container
         ResourceDatabasePopulator db = new ResourceDatabasePopulator();
         db.addScript(databaseScript);
-        // execute DatabasePopulator
-        int count = 10;
-        while (count > 0) {
-            try {
-                db.execute(driver);
-                count = 0;
-            } catch (UncategorizedScriptException e) {
-                count--;
-                Thread.sleep(500);
-            }
-        }
+        db.execute(dataSource);
 
-        return driver;
+        return dataSource;
     }
 
     @Autowired

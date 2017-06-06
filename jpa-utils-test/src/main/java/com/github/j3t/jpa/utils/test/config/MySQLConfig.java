@@ -7,6 +7,7 @@ import com.github.dockerjava.api.command.CreateContainerResponse;
 import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.Ports;
 import com.github.dockerjava.core.command.PullImageResultCallback;
+import com.github.j3t.jpa.utils.core.DataSourceHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +17,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
-import org.springframework.jdbc.datasource.init.UncategorizedScriptException;
 import org.springframework.orm.jpa.vendor.Database;
 
 import javax.annotation.PreDestroy;
@@ -49,7 +49,7 @@ public class MySQLConfig {
     }
 
     @Bean
-    public DataSource dataSource(@Value("/create-db.sql") Resource databaseScript, DockerClient dockerClient, CreateContainerResponse container) throws Exception {
+    public DataSource dataSource(DockerClient dockerClient, CreateContainerResponse container, @Value("/create-db.sql") Resource databaseScript) throws Exception {
         // start MySQL container
         dockerClient.startContainerCmd(container.getId()).exec();
 
@@ -64,31 +64,20 @@ public class MySQLConfig {
                 .getHostPortSpec();
 
         // create DataSource to connect to the MySQL container
-        DriverManagerDataSource driver = new DriverManagerDataSource();
-        driver.setDriverClassName("com.mysql.jdbc.Driver");
-        driver.setUrl("jdbc:mysql://localhost:" + exposedPort + "/test");
-        driver.setUsername("mysql");
-        driver.setPassword("mysql");
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://localhost:" + exposedPort + "/test");
+        dataSource.setUsername("mysql");
+        dataSource.setPassword("mysql");
 
-        // create DatabasePopulator to initialize the MySQL container
-        ResourceDatabasePopulator db = new ResourceDatabasePopulator();
-        db.addScript(databaseScript);
-        // execute DatabasePopulator
-        int count = 10;
-        while (count > 0) {
-            try {
-                // try execute
-                db.execute(driver);
-                // when successful -> done
-                count = 0;
-            } catch (UncategorizedScriptException e) {
-                // when failed -> try again
-                count--;
-                Thread.sleep(5000);
-            }
-        }
+        DataSourceHelper.waitUntilDatabaseIsAvailable(dataSource, 600);
 
-        return driver;
+        // initialize the MySQL container (DDL and DML)
+        ResourceDatabasePopulator databasePopulator = new ResourceDatabasePopulator();
+        databasePopulator.addScript(databaseScript);
+        databasePopulator.execute(dataSource);
+
+        return dataSource;
     }
 
     @Autowired

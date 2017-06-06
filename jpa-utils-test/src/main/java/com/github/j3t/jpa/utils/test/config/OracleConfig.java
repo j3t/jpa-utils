@@ -7,6 +7,7 @@ import com.github.dockerjava.api.command.CreateContainerResponse;
 import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.Ports;
 import com.github.dockerjava.core.command.PullImageResultCallback;
+import com.github.j3t.jpa.utils.core.DataSourceHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +17,6 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
-import org.springframework.jdbc.datasource.init.UncategorizedScriptException;
 import org.springframework.orm.jpa.vendor.Database;
 
 import javax.annotation.PreDestroy;
@@ -63,31 +63,20 @@ public class OracleConfig {
                 .getHostPortSpec();
 
         // create DataSource to connect to the OracleXE container
-        DriverManagerDataSource driver = new DriverManagerDataSource();
-        driver.setDriverClassName("oracle.jdbc.driver.OracleDriver");
-        driver.setUrl("jdbc:oracle:thin:@localhost:" + exposedPort +  ":xe");
-        driver.setUsername("system");
-        driver.setPassword("oracle");
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("oracle.jdbc.driver.OracleDriver");
+        dataSource.setUrl("jdbc:oracle:thin:@localhost:" + exposedPort + ":xe");
+        dataSource.setUsername("system");
+        dataSource.setPassword("oracle");
 
-        // create DatabasePopulator to initialize the OracleXE container
+        DataSourceHelper.waitUntilDatabaseIsAvailable(dataSource, 600);
+
+        // create DatabasePopulator to initialize the PostgreSQL container
         ResourceDatabasePopulator db = new ResourceDatabasePopulator();
         db.addScript(databaseScript);
-        // execute DatabasePopulator
-        int count = 10;
-        while (count > 0) {
-            try {
-                // try execute
-                db.execute(driver);
-                // when successful -> done
-                count = 0;
-            } catch (UncategorizedScriptException e) {
-                // when failed -> try again
-                count--;
-                Thread.sleep(5000);
-            }
-        }
+        db.execute(dataSource);
 
-        return driver;
+        return dataSource;
     }
 
     @Autowired
