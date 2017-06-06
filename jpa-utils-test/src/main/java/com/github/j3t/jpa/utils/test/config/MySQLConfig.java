@@ -65,7 +65,7 @@ public class MySQLConfig {
 
         // create DataSource to connect to the MySQL container
         DriverManagerDataSource driver = new DriverManagerDataSource();
-        driver.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        driver.setDriverClassName("com.mysql.jdbc.Driver");
         driver.setUrl("jdbc:mysql://localhost:" + exposedPort + "/test");
         driver.setUsername("mysql");
         driver.setPassword("mysql");
